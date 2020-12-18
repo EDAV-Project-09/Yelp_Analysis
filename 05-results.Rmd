@@ -95,7 +95,7 @@ yelp_AZ_postal <- yelp_AZ_postal[c(-1,-2),]
 names(yelp_AZ_postal) <- c('GEOID10','n')
 
 my_zip <- readOGR( 
-  dsn= path.expand("Data/zip_shape") , 
+  dsn= path.expand("data/zip_shape") , 
   layer="cb_2018_us_zcta510_500k",
   verbose=FALSE
 )
@@ -112,9 +112,9 @@ m <- leaflet(my_zip) %>%
 m
 ```
 
-This is a basic interactive plot with all the restaurants in Arizona grouped in zipcode clusters. You can zoom in and out to see the density distribution. You can further click on each restaurant to see details like Name, address, stars and is open or not. This visualization helps us to basicly understand how restaurants are distributed across zipcode zones. We can see from the map that maximum restaurants are clustered around Tempo, and Scottsdale, followed by some areas around Phoenix, and the area with fewer restaurants are a little bit far from Phoenix city.
+This is a basic interactive plot with all the restaurants in Arizona grouped in zipcode clusters. You can zoom in and out to see the density distribution. You can further click on each restaurant to see details like Name, address, stars and is open or not. This visualization helps us to basically understand how restaurants are distributed across zipcode zones. We can see from the map that maximum restaurants are clustered around Tempo, and Scottsdale, followed by some areas around Phoenix, and the area with fewer restaurants are a little bit far from Phoenix city.
 
-Now, because the epidemic is very serious, we really want to know if restaurants are still open. Here, we work with the is_open data within the dataset to see if there is any pattern about opening or not. In this interactive plot, you can click on the circles to see their basic informatin.
+Now, because the epidemic is very serious, we really want to know if restaurants are still open. Here, we work with the is_open data within the dataset to see if there is any pattern about opening or not. In this interactive plot, you can click on the circles to see their basic information.
 
 ```
 AZ_palette <- colorFactor(palette='RdYlBu', domain=yelp_AZ$is_open, levels = NULL, ordered = FALSE,
