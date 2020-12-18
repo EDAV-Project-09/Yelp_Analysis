@@ -535,4 +535,3 @@ statebins(
         axis.text = element_blank(),
         axis.ticks.y = element_blank())
 ```
-

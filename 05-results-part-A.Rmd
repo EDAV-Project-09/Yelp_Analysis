@@ -90,31 +90,9 @@ m <- leaflet(my_zip) %>%
 m
 ```
 
-```{r}
-yelp_AZ <- yelp_restaurant_data[yelp_restaurant_data$state=='AZ',]
-yelp_AZ_postal<- yelp_AZ %>% group_by(postal_code) %>% summarise(n=n())
-yelp_AZ_postal <- yelp_AZ_postal[c(-1,-2),]
-names(yelp_AZ_postal) <- c('GEOID10','n')
+![Choropleth: Density of restaurants in Arizona.](images/3.png)
 
-my_zip <- readOGR( 
-  dsn= path.expand("Data/zip_shape") , 
-  layer="cb_2018_us_zcta510_500k",
-  verbose=FALSE
-)
-
-my_zip@data <- left_join(my_zip@data,yelp_AZ_postal,by='GEOID10')
-mypalette <- colorNumeric( palette="viridis", domain=my_zip@data$n, na.color="transparent")
-
-m <- leaflet(my_zip) %>% 
-  addTiles()  %>% 
-  setView( lat=33.6, lng=-112 , zoom=9) %>%
-  addPolygons( fillColor = ~mypalette(n), stroke=FALSE, fillOpacity=0.5) %>%
-  addLegend("topright", pal = mypalette, values = my_zip@data$n, title = "quantity") 
-
-m
-```
-
-This is a basic interactive plot with all the restaurants in Arizona grouped in zipcode clusters. You can zoom in and out to see the density distribution. You can further click on each restaurant to see details like Name, address, stars and is open or not. This visualization helps us to basicly understand how restaurants are distributed across zipcode zones. We can see from the map that maximum restaurants are clustered around Tempo, and Scottsdale, followed by some areas around Phoenix, and the area with fewer restaurants are a little bit far from Phoenix city.
+This is a plot with all the restaurants in Arizona grouped in zipcode clusters. You can further click on each restaurant to see details like Name, address, stars and is open or not. This visualization helps us to basicly understand how restaurants are distributed across zipcode zones. We can see from the map that maximum restaurants are clustered around Tempo, and Scottsdale, followed by some areas around Phoenix, and the area with fewer restaurants are a little bit far from Phoenix city.
 
 Now, because the epidemic is very serious, we really want to know if restaurants are still open. Here, we work with the is_open data within the dataset to see if there is any pattern about opening or not. In this interactive plot, you can click on the circles to see their basic informatin.
 
@@ -340,4 +318,3 @@ yelp_time_tidy_final %>%
   theme(plot.title=element_text(face="bold",hjust=0.4),axis.text.x=element_text(size=7,angle=30))+
   facet_wrap(~timeofday)
 ```
-
