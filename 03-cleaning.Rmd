@@ -48,7 +48,19 @@ yelp_business_data$city <- factor(yelp_business_data$city)
 yelp_business_data$state <- factor(yelp_business_data$state)
 yelp_business_data$postal_code <- factor(yelp_business_data$postal_code)
 yelp_business_data$is_open <- factor(yelp_business_data$is_open)
-yelp_business_attribute <- yelp_business_data[,12]
+yelp_business_data$credit <- yelp_business_data$attributes$BusinessAcceptsCreditCards
+yelp_business_data$bikepark <- yelp_business_data$attributes$BikeParking
+yelp_business_data$busipark <- yelp_business_data$attributes$BusinessParking
+yelp_business_data$appointment <- yelp_business_data$attributes$ByAppointmentOnly
+yelp_business_data$price <- yelp_business_data$attributes$RestaurantsPriceRange2
+yelp_business_data$wifi <- yelp_business_data$attributes$WiFi
+yelp_business_data$attire <- yelp_business_data$attributes$RestaurantsAttire
+yelp_business_data$takeout <- yelp_business_data$attributes$RestaurantsTakeOut
+yelp_business_data$noise <- yelp_business_data$attributes$NoiseLevel
+yelp_business_data$reservation <- yelp_business_data$attributes$RestaurantsReservations
+yelp_business_data$groups <- yelp_business_data$attributes$RestaurantsGoodForGroups
+yelp_business_data$tv <- yelp_business_data$attributes$HasTV
+yelp_business_data$outdoor <- yelp_business_data$attributes$OutdoorSeating
 yelp_business_data <- yelp_business_data[,c(-12,-14)]
 #yelp_business_data$categories <- factor(yelp_business_data$categories)
 ```
@@ -397,22 +409,39 @@ yelp_restaurant1 <- yelp_restaurant1[,-grep('categories',colnames(yelp_restauran
 yelp_restaurant1 <- yelp_restaurant1[,-grep('categories',colnames(yelp_restaurant1))]
 ```
 
+## Deal with attributes ##
+
+```
+yelp_restaurant1$credit <- str_detect(yelp_restaurant1$credit,"True")
+yelp_restaurant1$attire <- gsub("u[']+|[']",'',yelp_restaurant1$attire)...
+```
+
+```{r}
+yelp_restaurant1$is_open <- str_detect(yelp_restaurant1$is_open,"1")
+yelp_restaurant1$credit <- str_detect(yelp_restaurant1$credit,"True")
+yelp_restaurant1$bikepark <- str_detect(yelp_restaurant1$bikepark,"True")
+yelp_restaurant1$busipark <- str_detect(yelp_restaurant1$busipark,"True")
+yelp_restaurant1$appointment <- str_detect(yelp_restaurant1$appointment,"True")
+yelp_restaurant1$wifi <- str_detect(yelp_restaurant1$wifi,"free")
+yelp_restaurant1$attire <- gsub("u[']+|[']",'',yelp_restaurant1$attire)
+yelp_restaurant1$takeout <- str_detect(yelp_restaurant1$takeout,"True")
+yelp_restaurant1$noise <- gsub("u[']+|[']",'',yelp_restaurant1$noise)
+yelp_restaurant1$reservation <- str_detect(yelp_restaurant1$reservation,"True")
+yelp_restaurant1$groups <- str_detect(yelp_restaurant1$groups,"True")
+yelp_restaurant1$tv <- str_detect(yelp_restaurant1$tv,"True")
+yelp_restaurant1$outdoor <- str_detect(yelp_restaurant1$outdoor,"True")
+```
+
 ## Output cleaned data ##
 
 ```
 write.csv(x = yelp_restaurant1,file = "yelp_cleaned_data.csv")
 ```
-```
-write.csv(x = yelp_business_attribute,file = "yelp_attribute_data.csv")
-```
 
 ```{r}
 write.csv(x = yelp_restaurant1,file = "yelp_cleaned_data.csv")
 ```
 
-```{r}
-write.csv(x = yelp_business_attribute,file = "yelp_attribute_data.csv")
-```
 
 
 
